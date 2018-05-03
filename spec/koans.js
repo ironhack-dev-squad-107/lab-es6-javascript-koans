@@ -1,5 +1,9 @@
 context = describe;
 
+/*********************************
+********* PAIR PROGRAMMING *********
+**********************************/
+
 describe('`let` restricts the scope of the variable to the current block - ', () => {
   describe('`let` vs. `var`.', () => {
     it('`var` works as usual, it does not restricts scope', () => {
@@ -182,78 +186,6 @@ describe('a template string, is wrapped in ` (backticks) instead of \' or ". ', 
   
 });
 
-describe('arrow functions! ', () => {
-
-  it('are shorter to write', function() {
-    let func = () => {
-      return 'I am func';
-    };
-    expect(func()).toBe('I am func');
-  });
-
-  it('a single expression, without curly braces returns too', function() {
-    let func = () => 'I return too';
-    expect(func()).toBe('I return too');
-  });
-
-  it('one parameter can be written without parens', () => {
-    let func = p => p - 1;
-    expect(func(25)).toEqual(24)
-  });
-
-  it('many params require parens', () => {
-    let func = (param, param1) => param + param1;
-    expect(func(23,42)).toEqual(23+42)
-  });
-
-  it('body needs parens to return an object', () => {
-    let func = () => { 
-      return {iAm: 'an object'} 
-    };
-    expect(func()).toEqual({iAm: 'an object'});
-  });
-  class LexicallyBound {
-  
-    getFunction() {
-      return () => {
-        return this; //change this
-      }
-    }
-  
-    getArgumentsFunction() {
-      return () => arguments;
-    } 
-  }
-
-  describe('arrow functions have lexical `this`, no dynamic `this`', () => {
-  
-    it('bound at definition time, use `=>` ', function() {
-      let bound = new LexicallyBound();
-      let fn = bound.getFunction();
-      
-      expect(fn()).toBe(bound);
-    });
-  
-    it('can NOT bind a different context', function() {
-      let bound = new LexicallyBound();
-      let fn = bound.getFunction();
-      let anotherObj = {};
-      let expected = bound; //change this
-      
-      expect(fn.call(anotherObj)).toBe(expected);
-    });
-    
-    it('`arguments` doesnt work inside arrow functions', function() {
-      let bound = new LexicallyBound();
-      let fn = bound.getArgumentsFunction();
-      
-      expect(fn(1, 2).length).toEqual(0);
-    });
-    
-  });
-
-});
-
 describe('The object literal allows for new shorthands. ', () => {
 
   const x = 1;
@@ -398,6 +330,82 @@ describe('destructuring can also have default values. ', () => {
     const [a, b=2] = '1';
     expect(a).toEqual('1');
     expect(b).toEqual(2);
+  });
+
+});
+
+/*********************************
+********* DAILY EXERCISE *********
+**********************************/
+
+describe('arrow functions! ', () => {
+
+  it('are shorter to write', function() {
+    let func = () => {
+      return 'I am func';
+    };
+    expect(func()).toBe('I am func');
+  });
+
+  it('a single expression, without curly braces returns too', function() {
+    let func = () => 'I return too';
+    expect(func()).toBe('I return too');
+  });
+
+  it('one parameter can be written without parens', () => {
+    let func = p => p - 1;
+    expect(func(25)).toEqual(24)
+  });
+
+  it('many params require parens', () => {
+    let func = (param, param1) => param + param1;
+    expect(func(23,42)).toEqual(23+42)
+  });
+
+  it('body needs parens to return an object', () => {
+    let func = () => { 
+      return {iAm: 'an object'} 
+    };
+    expect(func()).toEqual({iAm: 'an object'});
+  });
+  class LexicallyBound {
+  
+    getFunction() {
+      return () => {
+        return this; //change this
+      }
+    }
+  
+    getArgumentsFunction() {
+      return () => arguments;
+    } 
+  }
+
+  describe('arrow functions have lexical `this`, no dynamic `this`', () => {
+  
+    it('bound at definition time, use `=>` ', function() {
+      let bound = new LexicallyBound();
+      let fn = bound.getFunction();
+      
+      expect(fn()).toBe(bound);
+    });
+  
+    it('can NOT bind a different context', function() {
+      let bound = new LexicallyBound();
+      let fn = bound.getFunction();
+      let anotherObj = {};
+      let expected = bound; //change this
+      
+      expect(fn.call(anotherObj)).toBe(expected);
+    });
+    
+    it('`arguments` doesnt work inside arrow functions', function() {
+      let bound = new LexicallyBound();
+      let fn = bound.getArgumentsFunction();
+      
+      expect(fn(1, 2).length).toEqual(0);
+    });
+    
   });
 
 });
@@ -601,6 +609,5 @@ describe('class creation', () => {
   });
 
 });
-
 
 
